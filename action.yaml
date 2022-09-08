@@ -18,6 +18,14 @@ inputs:
     description: 'Programming language'
     required: true
     default: 'nodejs'
+  project-name:
+    description: 'Project name to report to Dependency Track. Falls back to the git repository name when not specified.'
+    required: false
+    default: ''
+  project-version:
+    description: 'Project version number to report to Dependency Track. Falls back to the git ref when not specified.'
+    required: false
+    default: ''
 
 outputs:
   riskscore:
@@ -30,4 +38,5 @@ runs:
     - ${{ inputs.url }}
     - ${{ inputs.key }}
     - ${{ inputs.language }}
-
+    - ${{ inputs.project-name }}
+    - ${{ inputs.project-version }}

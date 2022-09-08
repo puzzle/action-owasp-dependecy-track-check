@@ -3,6 +3,8 @@
 DTRACK_URL=$1
 DTRACK_KEY=$2
 LANGUAGE=$3
+PROJECT_NAME=$4
+PROJECT_VERSION=$3
 
 INSECURE="--insecure"
 #VERBOSE="--verbose"
@@ -141,8 +143,8 @@ upload_bom=$(curl $INSECURE $VERBOSE -s --location --request POST $DTRACK_URL/ap
 --header "X-Api-Key: $DTRACK_KEY" \
 --header "Content-Type: multipart/form-data" \
 --form "autoCreate=true" \
---form "projectName=$GITHUB_REPOSITORY" \
---form "projectVersion=$GITHUB_REF" \
+--form "projectName=${PROJECT_NAME:-$GITHUB_REPOSITORY}" \
+--form "projectVersion=${PROJECT_VERSION:-$GITHUB_REF}" \
 --form "bom=@sbom.xml")
 
 token=$(echo $upload_bom | jq ".token" | tr -d "\"")
@@ -175,7 +177,7 @@ echo "[*] OWASP Dependency Track processing completed"
 sleep 5
 
 echo "[*] Retrieving project information"
-project=$(curl  $INSECURE $VERBOSE -s --location --request GET "$DTRACK_URL/api/v1/project/lookup?name=$GITHUB_REPOSITORY&version=$GITHUB_REF" \
+project=$(curl  $INSECURE $VERBOSE -s --location --request GET "$DTRACK_URL/api/v1/project/lookup?name=${PROJECT_NAME:-$GITHUB_REPOSITORY}&version=${PROJECT_VERSION:-$GITHUB_REF}" \
 --header "X-Api-Key: $DTRACK_KEY")
 
 echo "$project"
