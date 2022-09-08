@@ -18,6 +18,7 @@ This action requires 3 input variables:
 - **language**: (refer to the next section)
 - **project-name** (optional): Project name to report to Dependency Track. Falls back to the git repository name when not specified.
 - **project-version** (optional): Project version number to report to Dependency Track. Falls back to the git ref when not specified.
+- **working-directory** (optional): The working directory to use for resolving paths for lockfiles.
 
 ## Output variables
 - **riskscore**: this variable will contain the risk score calculated by OWASP Dependency Track based on the found vulnerabilities. This output can be used to make decision such as notify the developer or use it as the input of the next step of the workflow.

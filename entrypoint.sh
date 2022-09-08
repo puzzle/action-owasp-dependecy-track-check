@@ -3,15 +3,16 @@
 DTRACK_URL=$1
 DTRACK_KEY=$2
 LANGUAGE=$3
-PROJECT_NAME=$4
-PROJECT_VERSION=$3
+WORKING_DIRECTORY=$4
+PROJECT_NAME=$5
+PROJECT_VERSION=$6
 
 INSECURE="--insecure"
 #VERBOSE="--verbose"
 
 # Access directory where GitHub will mount the repository code
 # $GITHUB_ variables are directly accessible in the script
-cd $GITHUB_WORKSPACE
+cd $GITHUB_WORKSPACE/$WORKING_DIRECTORY
 
 case $LANGUAGE in
     "yarn")
