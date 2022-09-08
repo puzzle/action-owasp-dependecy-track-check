@@ -12,6 +12,21 @@ INSECURE="--insecure"
 cd $GITHUB_WORKSPACE
 
 case $LANGUAGE in
+    "yarn")
+        lscommand=$(ls)
+        echo "[*] Processing NodeJS BoM"
+        apt-get install --no-install-recommends -y nodejs yarn
+        yarn install
+        if [ ! $? = 0 ]; then
+            echo "[-] Error executing npm install. Stopping the action!"
+            exit 1
+        fi
+        yarn global add @cyclonedx/bom
+        path="bom.xml"
+        cyclonedx-bom --help
+        BoMResult=$(cyclonedx-bom -o bom.xml)
+        ;;
+
     "nodejs")
         lscommand=$(ls)
         echo "[*] Processing NodeJS BoM"
